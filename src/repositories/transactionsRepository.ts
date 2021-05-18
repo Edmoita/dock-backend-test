@@ -15,10 +15,10 @@ export async function create(
   return Transaction.create(transactionData);
 }
 
-export async function listAllFromAccount(
+export async function listAllFromAccountSortedByDateDesc(
   account_id: number,
 ): Promise<ITransaction[]> {
-  return Transaction.find({ account_id });
+  return Transaction.find({ account_id }).sort('-date');
 }
 
 type TotalWithdrawalsFromAccountInDayParams = {
