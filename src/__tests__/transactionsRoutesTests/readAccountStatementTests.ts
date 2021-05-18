@@ -35,6 +35,7 @@ export default (): void => {
       .then(expectError(ACCOUNT_BLOCKED));
   });
 
+  let accountId = 0;
   test('Account statement ordered by date desc', async () => {
     const account = await Account.create({
       user_id: 1,
@@ -43,6 +44,8 @@ export default (): void => {
       is_active: true,
       type: 1,
     });
+
+    accountId = account._id;
 
     const [transaction1, transaction2, transaction3] = await Promise.all([
       Transaction.create({
@@ -70,6 +73,21 @@ export default (): void => {
         expect(response.body[0]._id).toBe(transaction3._id);
         expect(response.body[1]._id).toBe(transaction1._id);
         expect(response.body[2]._id).toBe(transaction2._id);
+      });
+  });
+
+  test('Account statement by period ordered by date desc', () => {
+    return request(app)
+      .get(route)
+      .query({
+        account_id: accountId,
+        beginDate: new Date(2021, 10, 1),
+        endDate: new Date(2021, 11, 1),
+      })
+      .then(response => {
+        expect(response.body).toHaveLength(2);
+        expect(response.body[0].value).toBe(100);
+        expect(response.body[1].value).toBe(-30);
       });
   });
 };
