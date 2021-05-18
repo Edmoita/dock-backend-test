@@ -20,7 +20,7 @@ export default async ({
     daily_withdrawal_limit,
     type,
     balance: 0,
-    is_active: false,
+    is_active: true,
   });
 
   return account;
