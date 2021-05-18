@@ -24,7 +24,9 @@ export default async ({
     date,
   });
 
-  account.balance += value;
+  const newBalance = Math.round((account.balance + value) * 100) / 100;
+
+  account.balance = newBalance;
 
   await accountsRepository.save(account);
 
