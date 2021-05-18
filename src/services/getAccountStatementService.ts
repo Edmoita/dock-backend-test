@@ -5,17 +5,26 @@ import ITransaction from '../types/ITransaction';
 
 type Params = {
   account_id: number;
+  beginDate?: string;
+  endDate?: string;
 };
 
-export default async ({ account_id }: Params): Promise<ITransaction[]> => {
+export default async ({
+  account_id,
+  beginDate,
+  endDate,
+}: Params): Promise<ITransaction[]> => {
   const account = await accountsRepository.findByIdOrFail(account_id);
 
   if (!account.is_active) throw ACCOUNT_BLOCKED;
 
-  const transactions =
-    await transactionsRepository.listAllFromAccountSortedByDateDesc(
-      account._id,
-    );
+  if (beginDate && endDate) {
+    return transactionsRepository.listAllFromAccountByPeriodSortedByDateDesc({
+      account_id,
+      beginDate: new Date(beginDate),
+      endDate: new Date(endDate),
+    });
+  }
 
-  return transactions;
+  return transactionsRepository.listAllFromAccountSortedByDateDesc(account._id);
 };
