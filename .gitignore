@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+### Docker ###
+# docker-compose file
+docker-compose.yml
+
+### MongoDB data ###
+data
