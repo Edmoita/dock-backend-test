@@ -44,7 +44,7 @@ export default (): void => {
           user_id: user._id,
           balance: 0,
           daily_withdrawal_limit: 100,
-          is_active: false,
+          is_active: true,
           type: 1,
         });
       });
