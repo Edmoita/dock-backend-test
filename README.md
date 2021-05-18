@@ -4,9 +4,10 @@
 
   - [🔖&nbsp; Sobre](#-sobre)
   - [🗂 Como executar](#-como-executar)
+  - [Documentação da API](#documentação-da-api)
   - [Escopo mínimo](#escopo-mínimo)
-  - [Diferencial](#-diferencial)
-  - [Outras melhorias](#-outras-melhorias)
+  - [Diferencial](#diferencial)
+  - [Outras melhorias](#outras-melhorias)
 
 ---
 ### 🔖&nbsp; Sobre
@@ -37,15 +38,23 @@ Teste técnico para desenvolvedor back end na [Dock](https://dock.tech/)
     # Inicie e execute o aplicativo
     $ docker-compose up
 
+    # Execute o script para criação de um usuário
+    $ docker exec dock_test_api node ./dist/scripts/createUser.js
+
     # Para executar os testes, faça
     $ docker exec dock_test_api yarn test
 ```
 ---
+### Documentação da API
+Acesse a documentação da API no formato OpenAPI 2 (Swagger) em [http://localhost:3333/docs](http://localhost:3333/docs)
+
+---
+
 ### Escopo mínimo
 - [X] Implementar path que realiza a criação de uma conta;
   - [X] Deve ser possível criar uma conta com idPessoa, limiteSaqueDiario e tipoConta;
   - [X] O saldo deve ter o valor default 0;
-  - [X] A conta será criada bloqueada com valor flagAtivo como falso;
+  - [X] A conta será criada bloqueada com valor flagAtivo como verdadeiro;
   - [X] O campo dataCriacao será determinado no momento da inserção no banco de dados.
 - [X] Implementar path que realiza operação de depósito em uma conta;
   - [X] Deve ser possível criar uma transação de depósito com idConta e valor;
@@ -76,9 +85,17 @@ Teste técnico para desenvolvedor back end na [Dock](https://dock.tech/)
 - [X] Elaborar manual de execução;
   - [X] Fazer uma seção neste README como executar o projeto;
   - [X] Criar Dockerfile e docker-compose.
-- [ ] Elaborar documentação;
-  - [ ] Deve ser escrita na especificação OpenApi (Swagger);
-  - [ ] Deve estar disponível na aplicação como um endpoint.
+- [X] Elaborar documentação;
+  - [X] Deve ser escrita na especificação OpenApi (Swagger);
+  - [X] Deve estar disponível na aplicação como um endpoint.
 - [X] Elaborar testes;
   - [X] Devem testar os requisitos e regras de negócio citados em Escopo mínimo;
   - [X] Deve ser gerado um coverage report.
+---
+### Outras melhorias
+- [ ] Implementação de pontos de falha e resiliência;
+  - [ ] Deve ser implementado um middleware de validação de dados de requisição;
+  - [X] Deve ser implementado um middleware de tratamento de erros;
+- [ ] Elaborar desenho da arquitetura do projeto.
+  - [ ] O arquivo com o desenho deve ficar disponível no repositório.
+
