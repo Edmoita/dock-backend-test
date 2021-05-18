@@ -14,7 +14,7 @@ const AccountSchema: Schema = new Schema({
   daily_withdrawal_limit: Number,
   is_active: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   type: Number,
   createdAt: {
