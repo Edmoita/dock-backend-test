@@ -30,18 +30,19 @@ Technical test for back end developer at Dock
   - [X] Deve ser possível bloquear uma conta com idConta;
 - [X] Implementar path que recupera o extrato de transações de uma conta;
   - [X] Deve ser possível listar as transações de uma conta;
-  - [ ] As transações devem retornar em ordem crescente de dataTransacao.
+  - [X] A conta deve estar ativa;
+  - [X] As transações devem retornar em ordem decrescente de dataTransacao.
 - [X] Script para criação de pelo menos uma pessoa.
 
 ## Diferencial
-- [ ] Implementar extrato por período;
-  - [ ] Deve ser possível listar as transações com mês e ano;
-  - [ ] As transações devem retornar em ordem crescente de dataTransacao.
+- [X] Implementar extrato por período;
+  - [X] Deve ser possível listar as transações com um intervalo de tempo;
+  - [X] As transações devem retornar em ordem decrescente de dataTransacao.
 - [ ] Elaborar manual de execução;
   - [ ] Criar Dockerfile ou docker-compose
 - [ ] Elaborar documentação;
   - [ ] Deve ser escrita na especificação OpenApi;
   - [ ] Deve estar disponível na aplicação como um endpoint.
-- [ ] Elaborar testes;
-  - [ ] Devem testar os requisitos e regras de negócio citados em Escopo mínimo;
-  - [ ] Deve ser gerado um coverage report.
+- [X] Elaborar testes;
+  - [X] Devem testar os requisitos e regras de negócio citados em Escopo mínimo;
+  - [X] Deve ser gerado um coverage report.
