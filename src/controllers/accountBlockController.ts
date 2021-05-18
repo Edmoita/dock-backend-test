@@ -10,5 +10,5 @@ export async function create(
 
   const account = await blockAccount(Number(account_id));
 
-  return response.json(account);
+  return response.status(201).json(account);
 }

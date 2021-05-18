@@ -14,5 +14,5 @@ export async function read(
     endDate: endDate as string,
   });
 
-  return response.json(transaction);
+  return response.status(200).json(transaction);
 }

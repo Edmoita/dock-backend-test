@@ -14,5 +14,5 @@ export async function create(
     type,
   });
 
-  return response.json(account);
+  return response.status(201).json(account);
 }

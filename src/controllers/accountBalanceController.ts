@@ -10,5 +10,5 @@ export async function read(
 
   const balance = await readAccountBalance(Number(account_id));
 
-  return response.json(balance);
+  return response.status(200).json(balance);
 }

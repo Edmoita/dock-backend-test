@@ -14,5 +14,5 @@ export async function create(
     date: new Date(date),
   });
 
-  return response.json(transaction);
+  return response.status(201).json(transaction);
 }

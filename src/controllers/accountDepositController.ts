@@ -10,5 +10,5 @@ export async function create(
 
   const transaction = await createAccountDeposit({ account_id, value, date });
 
-  return response.json(transaction);
+  return response.status(201).json(transaction);
 }
