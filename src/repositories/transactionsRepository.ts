@@ -29,7 +29,7 @@ type TotalWithdrawalsFromAccountInDayParams = {
 export async function getTotalWithdrawalsFromAccountInDay({
   account_id,
   date,
-}: TotalWithdrawalsFromAccountInDayParams) {
+}: TotalWithdrawalsFromAccountInDayParams): Promise<number> {
   const result = await Transaction.aggregate()
     .match({
       account_id,
