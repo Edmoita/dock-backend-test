@@ -6,9 +6,11 @@ export async function read(
   request: Request,
   response: Response,
 ): Promise<Response> {
-  const { account_id } = request.body;
+  const { account_id } = request.query;
 
-  const transaction = await getAccountStatement({ account_id });
+  const transaction = await getAccountStatement({
+    account_id: Number(account_id),
+  });
 
   return response.json(transaction);
 }
