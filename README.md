@@ -1,12 +1,47 @@
 # dock-backend-test
-Technical test for back end developer at Dock
 
+## Índice
 
-## Requisitos
-- Node.js (14.17.0)
-- Yarn (1.22.5)
+  - [🔖&nbsp; Sobre](#-sobre)
+  - [🗂 Como executar](#-como-executar)
+  - [Escopo mínimo](#escopo-mínimo)
+  - [Diferencial](#-diferencial)
+  - [Outras melhorias](#-outras-melhorias)
 
-## Escopo mínimo
+---
+### 🔖&nbsp; Sobre
+
+Teste técnico para desenvolvedor back end na [Dock](https://dock.tech/)
+
+---
+
+### 🗂 Como executar
+
+```bash
+
+    # Clone o repositório
+    $ git clone https://github.com/Edmoita/dock-backend-test
+
+    # Entre no diretório
+    $ cd dock-backend-test
+
+    # Crie uma cópia do arquivo de configuração do docker
+    $ cp docker-compose.yml.example docker-compose.yml
+
+    # Crie uma cópia do arquivo com as variáveis de ambiente
+    $ cp .env.example .env
+
+    # Instale as dependências
+    $ yarn install
+
+    # Inicie e execute o aplicativo
+    $ docker-compose up
+
+    # Para executar os testes, faça
+    $ docker exec dock_test_api yarn test
+```
+---
+### Escopo mínimo
 - [X] Implementar path que realiza a criação de uma conta;
   - [X] Deve ser possível criar uma conta com idPessoa, limiteSaqueDiario e tipoConta;
   - [X] O saldo deve ter o valor default 0;
@@ -33,15 +68,16 @@ Technical test for back end developer at Dock
   - [X] A conta deve estar ativa;
   - [X] As transações devem retornar em ordem decrescente de dataTransacao.
 - [X] Script para criação de pelo menos uma pessoa.
-
-## Diferencial
+---
+### Diferencial
 - [X] Implementar extrato por período;
   - [X] Deve ser possível listar as transações com um intervalo de tempo;
   - [X] As transações devem retornar em ordem decrescente de dataTransacao.
-- [ ] Elaborar manual de execução;
-  - [ ] Criar Dockerfile ou docker-compose
+- [X] Elaborar manual de execução;
+  - [X] Fazer uma seção neste README como executar o projeto;
+  - [X] Criar Dockerfile e docker-compose.
 - [ ] Elaborar documentação;
-  - [ ] Deve ser escrita na especificação OpenApi;
+  - [ ] Deve ser escrita na especificação OpenApi (Swagger);
   - [ ] Deve estar disponível na aplicação como um endpoint.
 - [X] Elaborar testes;
   - [X] Devem testar os requisitos e regras de negócio citados em Escopo mínimo;
