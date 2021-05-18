@@ -15,6 +15,23 @@ export async function create(
   return Transaction.create(transactionData);
 }
 
+type TransactionsListFromAccountByPeriodParams = {
+  account_id: number;
+  beginDate: Date;
+  endDate: Date;
+};
+
+export async function listAllFromAccountByPeriodSortedByDateDesc({
+  account_id,
+  beginDate,
+  endDate,
+}: TransactionsListFromAccountByPeriodParams): Promise<ITransaction[]> {
+  return Transaction.find({
+    account_id,
+    date: { $gte: beginDate, $lte: endDate },
+  }).sort('-date');
+}
+
 export async function listAllFromAccountSortedByDateDesc(
   account_id: number,
 ): Promise<ITransaction[]> {
