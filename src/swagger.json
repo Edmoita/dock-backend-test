@@ -1,0 +1,679 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Dock Test API reference.\n\n",
+    "version": "1.0.0",
+    "title": "Dock Test API",
+    "contact": {
+      "email": "moitaneto@hotmail.com"
+    }
+  },
+  "host": "127.0.0.1:3333",
+  "tags": [
+    {
+      "name": "Contas",
+      "description": "Endpoints relacionados à Conta."
+    },
+    {
+      "name": "Transações",
+      "description": "Endpoints relacionados à Transação."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/accounts": {
+      "post": {
+        "tags": [
+          "Contas"
+        ],
+        "summary": "Cria uma conta",
+        "description": "Retorna a conta criada",
+        "operationId": "createAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "accountData",
+            "description": "Dados para criação da conta",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "description": "Id do Usuário associado à conta",
+                  "type": "integer",
+                  "example": 1
+                },
+                "daily_withdrawal_limit": {
+                  "type": "number",
+                  "description": "Limite de saque diário",
+                  "example": 100
+                },
+                "type": {
+                  "description": "Tipo da conta",
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso. Retorna a conta criada.",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "700": {
+            "description": "Usuário não encontrado",
+            "schema": {
+              "$ref": "#/definitions/USER_NOT_FOUND_ERROR"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/block": {
+      "post": {
+        "tags": [
+          "Contas"
+        ],
+        "summary": "Bloqueia uma conta",
+        "description": "Retorna a conta bloqueada",
+        "operationId": "blockAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "description": "Id da Conta que será bloqueada",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso. Retorna a conta bloqueada.",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "710": {
+            "description": "Conta não encontrada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_NOT_FOUND_ERROR"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/balance": {
+      "get": {
+        "tags": [
+          "Contas"
+        ],
+        "summary": "Consulta o saldo de uma conta",
+        "description": "Retorna o valor do saldo",
+        "operationId": "readAccountBalance",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "description": "Id da Conta cujo saldo será consultado",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso. Retorna o valor do saldo.",
+            "schema": {
+              "example": 400
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "710": {
+            "description": "Conta não encontrada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_NOT_FOUND_ERROR"
+            }
+          },
+          "711": {
+            "description": "Conta bloqueada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_BLOCKED_ERROR"
+            }
+          }
+        }
+      }
+    },
+    "/transactions/deposit": {
+      "post": {
+        "tags": [
+          "Transações"
+        ],
+        "summary": "Cria uma transação de depósito",
+        "description": "Retorna a transação criada",
+        "operationId": "createAccountDeposit",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "depositData",
+            "description": "Dados da transação de depósito",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "description": "Id da Conta que será creditada",
+                  "type": "integer",
+                  "example": 1
+                },
+                "value": {
+                  "type": "number",
+                  "description": "Valor a ser depositado",
+                  "minimum": 0.01,
+                  "example": 400
+                },
+                "date": {
+                  "description": "Data da transação",
+                  "type": "string",
+                  "example": "2021-05-18T15:26:49.852Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso. Retorna a transação criada.",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "710": {
+            "description": "Conta não encontrada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_NOT_FOUND_ERROR"
+            }
+          },
+          "711": {
+            "description": "Conta bloqueada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_BLOCKED_ERROR"
+            }
+          }
+        }
+      }
+    },
+    "/transactions/withdraw": {
+      "post": {
+        "tags": [
+          "Transações"
+        ],
+        "summary": "Cria uma transação de saque",
+        "description": "Retorna a transação criada",
+        "operationId": "createAccountWithdraw",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "withdrawData",
+            "description": "Dados da transação de saque",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "description": "Id da Conta que será debitada",
+                  "type": "integer",
+                  "example": 1
+                },
+                "value": {
+                  "type": "number",
+                  "description": "Valor a ser debitado",
+                  "minimum": 0.01,
+                  "example": 125
+                },
+                "date": {
+                  "description": "Data da transação",
+                  "type": "string",
+                  "example": "2021-05-18T15:26:49.852Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso. Retorna a transação criada.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "format": "int32",
+                  "example": 1
+                },
+                "account_id": {
+                  "type": "number",
+                  "format": "int32",
+                  "example": 1
+                },
+                "value": {
+                  "type": "number",
+                  "example": -125
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2021-05-18T15:26:49.852Z"
+                }
+              }
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "710": {
+            "description": "Conta não encontrada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_NOT_FOUND_ERROR"
+            }
+          },
+          "711": {
+            "description": "Conta bloqueada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_BLOCKED_ERROR"
+            }
+          },
+          "712": {
+            "description": "Saldo insuficiente",
+            "schema": {
+              "$ref": "#/definitions/INSUFFICIENT_FUNDS_ERROR"
+            }
+          },
+          "713": {
+            "description": "Limite de saque diário excedido",
+            "schema": {
+              "$ref": "#/definitions/DAILY_WITHDRAWAL_LIMIT_EXCEEDED_ERROR"
+            }
+          }
+        }
+      }
+    },
+    "/transactions/statement": {
+      "get": {
+        "tags": [
+          "Transações"
+        ],
+        "summary": "Recupera o extrato de transações de uma conta",
+        "description": "Retorna a lista de transações",
+        "operationId": "getAccountStatement",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "account_id",
+            "description": "Id da Conta cujo extrato será recuperado",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "beginDate",
+            "description": "Date de início para recuperação do extrato por período",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "Date de fim para recuperação do extrato por período",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso. Retorna uma lista de transações ordenadas descrescentemente pela data.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Transaction"
+              }
+            }
+          },
+          "600": {
+            "description": "Erro inesperado. Veja error.internalError e avisar ao back.",
+            "schema": {
+              "$ref": "#/definitions/UNDEFINED_ERROR"
+            }
+          },
+          "630": {
+            "description": "Erro na validação. Veja error.message",
+            "schema": {
+              "$ref": "#/definitions/VALIDATION_ERROR"
+            }
+          },
+          "710": {
+            "description": "Conta não encontrada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_NOT_FOUND_ERROR"
+            }
+          },
+          "711": {
+            "description": "Conta bloqueada",
+            "schema": {
+              "$ref": "#/definitions/ACCOUNT_BLOCKED_ERROR"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "number",
+          "format": "int32",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Machado de Assis",
+        },
+        "cpf": {
+          "type": "string",
+          "example": "00011122233"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "example": "1839-06-21T18:26:49.852Z"
+        }
+      }
+    },
+    "Account": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "number",
+          "format": "int32",
+          "example": 1
+        },
+        "user_id": {
+          "type": "number",
+          "format": "int32",
+          "example": 1
+        },
+        "balance": {
+          "type": "number",
+          "example": 400
+        },
+        "daily_withdrawal_limit": {
+          "type": "number",
+          "example": 200
+        },
+        "is_active": {
+          "type": "boolean",
+          "example": false,
+          "default": false
+        },
+        "type": {
+          "type": "integer",
+          "example": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2021-05-18T15:26:49.852Z"
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "number",
+          "format": "int32",
+          "example": 1
+        },
+        "account_id": {
+          "type": "number",
+          "format": "int32",
+          "example": 1
+        },
+        "value": {
+          "type": "number",
+          "example": 400
+        },
+        "date": {
+          "type": "string",
+          "example": "2021-05-18T15:26:49.852Z"
+        }
+      }
+    },
+    "VALIDATION_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 400
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 630
+        },
+        "message": {
+          "type": "string",
+          "example": "Mensagem de acordo com o erro"
+        }
+      }
+    },
+    "USER_NOT_FOUND_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 404
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 700
+        },
+        "message": {
+          "type": "string",
+          "example": "Usuário não encontrado"
+        }
+      }
+    },
+    "UNDEFINED_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 500
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 900
+        },
+        "message": {
+          "type": "string",
+          "example": ""
+        }
+      }
+    },
+    "ACCOUNT_NOT_FOUND_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 404
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 710
+        },
+        "message": {
+          "type": "string",
+          "example": "Conta não encontrada"
+        }
+      }
+    },
+    "ACCOUNT_BLOCKED_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 422
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 711
+        },
+        "message": {
+          "type": "string",
+          "example": "Conta bloqueada"
+        }
+      }
+    },
+    "INSUFFICIENT_FUNDS_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 422
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 712
+        },
+        "message": {
+          "type": "string",
+          "example": "Saldo insuficiente"
+        }
+      }
+    },
+    "DAILY_WITHDRAWAL_LIMIT_EXCEEDED_ERROR": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 422
+        },
+        "internalCode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 713
+        },
+        "message": {
+          "type": "string",
+          "example": "Limite de saque diário excedido"
+        }
+      }
+    }
+  }
+}
