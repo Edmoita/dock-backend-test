@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db:
+    image: mongo
+    environment:
+      - MONGODB_DBNAME=dock_mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  app:
+    container_name: dock_test_api
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    build: .
+    command: yarn run dev
+    ports:
+      - "3333:3333"
+    links:
+      - db
+    depends_on:
+      - db
